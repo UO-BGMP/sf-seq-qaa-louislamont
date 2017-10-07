@@ -1,5 +1,5 @@
 # SF-seq_QAA
 
-This assignment is due Wednesday, Oct 4 by 11:59 PM.
+The primary file is Wright_ps1.html, which contains answers to the questions, plots, and most code used (not including python scripts and full batch scripts).
 
-Be sure to upload all relevant materials by the deadline and **double check** to be sure that your off-line repository is up-to-date with your on-line repository. Answers to the questions can be submitted as ```html```, Github markdown, or ```pdf```.
+Also included are the actual batch and python scripts in their respective folders, as well as the actual image files, in the fastqc-images and myfiles folders, plus the .Rmd file used to generate the .html file.

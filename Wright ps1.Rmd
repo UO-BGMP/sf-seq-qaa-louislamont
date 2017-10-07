@@ -69,7 +69,13 @@ The FastQC results match up to my own with regards to the quality plots. However
 
 ### Part 2
 
-**3.** 
+**3. Describe the different adapter trimming options and use one to trim adapter sequences**
+
+**cutadapt** - cutadapt allows you to trim adapter sequences from the 5' or 3' ends, using different flags (ex: -a/-g respectively), and can handle paired end data as well (-A/-G for the paired adapter sequences). It does not, however, reverse complement the adapter for the reverse sequence. There are also a number of filtering options, such as the ability to throw away reads that are too short or too long. cutadapt is N-tolerant as well.
+
+**process_shortreads** - process_shortreads is included in the STACKS package, and is also capable of processing single or paired-end reads. As with cutadapt, you must supply it with adapter sequences. It also supplies several options for read cleaning, including the ability to remove reads containing N's as well as reads with low quality scores or that didn't pass Illumina's chastity filter. process_shortreads also gives you the ability to supply and rescue barcodes from the reads.
+
+**Trimmomatic** - Out of all 3, I think Trimmomatic is the most dissimilar. For one, instead of applying adapter sequences, you must specify which set of adapters was used (e.g. TruSeq3). You also have the ability to trim leading and trailing reads if they fall below some quality score you specify, crop the read from either end, and drop the read if it falls below a specified length.
 
 **Adapter sequences**
 
@@ -164,10 +170,22 @@ Mapped: 241195
 % Mapped: 2.2850547406063306
 ```
 
-**7.** Demonstrate that the SF-seq data is strand-specific
+**7. Demonstrate that the SF-seq data is strand-specific**
+
+I looked it up online and one person recommended using the infer_experiment.py script from the RSeQC program. This requires a bam file generated from aligning reads to the genomic database. The general pipeline would be to generate a GSNAP database from the mouse chromosomal sequences, then align our reads to them using gsnap. Following that, convert the .sam file into a .bam file using samtools, then use the .bam file in infer_experiment.
+
+Something like:
 
 ```{bash}
+gmap_build -D . -g -d mousedb mouse Mus_musculus.GRCm38.dna.chromosome.*.fa.gz
 
+gsnap -D db/Mouse-genome/ -d mousedb -N 1 -t 26 -A sam --allow-pe-name-mismatch fastq-out/2B-R1.fastq fastq-out/2B-R2.fastq > 2_2B_genome.sam
+
+samtools view -b -o 2_2B_genome.bam 2_2B_genome.sam
+
+infer_experiment.py -i 2_2B_genome.sam -r mm10_RefSeq.bed
 ```
+
+I would show you the results if I had started earlier and was able to make the database and align the reads.
 
 ~
