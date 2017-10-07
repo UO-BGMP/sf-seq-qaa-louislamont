@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --partition=short
+#SBATCH --job-name=gmapdb
+#SBATCH --output=gmapdb.out
+#SBATCH --error=gmapdb.err
+#SBATCH --time=0-06:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+
+module load gmap-gsnap/2017-09-11
+
+gmap_build -D db/ -d Mouse-rRNA Mouse-rRNA.fa 

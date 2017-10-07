@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --partition=short
+#SBATCH --job-name=cutadapt
+#SBATCH --output=cutadapt7.out
+#SBATCH --error=cutadapt7.err
+#SBATCH --time=0-06:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=28
+
+ml easybuild  icc/2017.1.132-GCC-6.3.0-2.27  impi/2017.1.132 cutadapt
+
+cutadapt -a GATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNNNATCTCGTATGCCGTCTTCTGCTTG \
+-A GATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTNNNNNNNNGTGTAGATCTCGGTGGTCGCCGTATCATT \
+-o fastq-out/2E-R1.fastq -p fastq-out/2E-R2.fastq \
+/projects/bgmp/2017_sequencing/demultiplexed/7_2E_fox_S6_L008_R1_001.fastq.gz \
+/projects/bgmp/2017_sequencing/demultiplexed/7_2E_fox_S6_L008_R2_001.fastq.gz 
+
