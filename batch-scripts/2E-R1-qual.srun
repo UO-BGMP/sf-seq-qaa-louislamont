@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --partition=long
+#SBATCH --job-name=2ER1stats
+#SBATCH --output=2ER1stats.out
+#SBATCH --error=2ER1stats.err
+#SBATCH --time=2-00:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=28
+
+ml easybuild  GCC/6.3.0-2.27  OpenMPI/2.0.2 Python/3.6.1 icc/2017.1.132-GCC-6.3.0-2.27  impi/2017.1.132 matplotlib/2.0.1-Python-3.6.1
+
+./barhopping.py -i seqs/7_2E_fox_S6_L008_R1_001.fastq \
+-o 2ER1qual.png -p 2ER1hist.png -r 2E_R1

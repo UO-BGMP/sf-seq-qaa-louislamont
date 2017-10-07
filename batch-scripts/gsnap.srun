@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --partition=short
+#SBATCH --job-name=gsnap
+#SBATCH --output=gsnap.out
+#SBATCH --error=gsnap.err
+#SBATCH --time=0-06:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=14
+
+module load gmap-gsnap/2017-09-11
+
+gsnap -D db/Mouse-rRNA/ -d Mouse-rRNA -N 1 -t 12 -A sam --allow-pe-name-mismatch fastq-out/2B-R1.fastq fastq-out/2B-R2.fastq > 2_2B_rRNA.sam
